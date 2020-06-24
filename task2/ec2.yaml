@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Create an Ubuntu 18.04 server in the default VPC
+Parameters: 
+  InstanceTypeParam: 
+    Type: String
+    Default: t2.micro
+    AllowedValues: 
+      - t2.micro
+      - m1.small
+      - m1.large
+    Description: Enter t2.micro, m1.small, or m1.large. Default is t2.micro
+  KeyNameParam:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: Enter the name of the key you'd like to use to access the server
+  ImageIdParam:
+    Type: AWS::EC2::Image::Id
+    Description: Enter the image ID you'd like to base the server on.
+    Default: ami-085925f297f89fce1
+Resources:
+  DefaultInstance: 
+    Type: "AWS::EC2::Instance"
+    Properties: 
+      ImageId: !Ref ImageIdParam
+      InstanceType: !Ref InstanceTypeParam
+      KeyName: !Ref KeyNameParam
+Outputs:
+  InstanceID:
+    Description: Instance ID
+    Value: !Ref DefaultInstance
